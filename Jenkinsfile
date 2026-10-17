@@ -128,7 +128,7 @@ pipeline {
         }
         stage ('Deploy to Dev Environment') {
            steps {
-           build job: 'ansible-config-mgt/jenkins-ansible-parametrized', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+           build job: 'ansible-config-mgt/jenkins-ansible-paramatrized', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
            }
         }
 
