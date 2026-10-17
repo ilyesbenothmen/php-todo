@@ -16,15 +16,19 @@ pipeline {
       }
     }
 
+
     stage('Prepare Dependencies') {
       steps {
+        sh 'php -v'
+        sh 'mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views storage/logs'
+        sh 'chmod -R 775 bootstrap/cache storage'
         sh 'mv .env.sample .env'
-        sh 'composer install'
-        sh 'php artisan migrate'
-        sh 'php artisan db:seed'
+        sh 'composer install --no-interaction --prefer-dist'
         sh 'php artisan key:generate'
+        sh 'php artisan migrate --force'
+        sh 'php artisan db:seed --force'
       }
-    }
+    }    
 
   }
 }
