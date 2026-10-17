@@ -28,6 +28,11 @@ pipeline {
         sh 'php artisan migrate --force'
         sh 'php artisan db:seed --force'
       }
+    }
+    stage('Execute Unit Tests') {
+      steps {
+             sh './vendor/bin/phpunit'
+      } 
     }    
 
   }
