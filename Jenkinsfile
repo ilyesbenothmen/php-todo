@@ -152,10 +152,23 @@ pipeline {
             }
 
         }
+        /*
         stage ('Deploy to Dev Environment') {
            steps {
            build job: 'ansible-config-mgt/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
            }
+        }
+        */
+        stage('Deploy to Dev Environment') {
+          steps {
+            build job: 'ansible-config-mgt/main',
+              parameters: [
+                [$class: 'StringParameterValue', name: 'env', value: 'dev'],
+                [$class: 'StringParameterValue', name: 'app_build_number', value: "${env.BUILD_NUMBER}"]
+              ],
+              propagate: true,
+              wait: true
+          }
         }
 
   
