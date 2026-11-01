@@ -121,7 +121,8 @@ pipeline {
         stage ('Upload Artifact to Artifactory') {
           steps {
             script { 
-                 def server = Artifactory.server 'artifactory-server'                 
+                 def server = Artifactory.server 'artifactory-server'       
+                 /*          
                  def uploadSpec = """{
                     "files": [
                       {
@@ -131,8 +132,21 @@ pipeline {
 
                        }
                     ]
-                 }""" 
-
+                 }""" */
+                  def uploadSpec = """{
+                    "files": [
+                      {
+                      "pattern": "php-todo.zip",
+                      "target": "php-todo-local/php-todo/${env.BUILD_NUMBER}/",
+                      "props": "type=zip;status=ready"
+                      },
+                      {
+                      "pattern": "php-todo.zip",
+                      "target": "php-todo-local/php-todo/latest/",
+                      "props": "type=zip;status=ready"
+                      }
+                    ]
+                  }"""
                  server.upload spec: uploadSpec
                }
             }
